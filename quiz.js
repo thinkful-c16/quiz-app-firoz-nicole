@@ -30,7 +30,7 @@ const STORE = {
   currentIndex: 0,
   userAnswerChoice: {}, 
   //score
-}
+};
 
 function userAnswer(){
   $('#answer-options').on('submit', function(event){
@@ -38,7 +38,7 @@ function userAnswer(){
     STORE.userAnswerChoice.val();
     console.log('test');
 
-  })
+  });
 }
 
 // Template generators
@@ -60,33 +60,27 @@ function generateNextQuestion() {
   return content;
 }
 
-function generateStartQuiz(){
-  return `
-    <h1>Nintendo Quiz</h1>
-    <div class="image" >
-    <img src="" alt="alt image text  DONT FORGET to update">
-    </div>
+// function generateStartQuiz(){
+//   return `
+//     <h1>Nintendo Quiz</h1>
+//     <div class="image" >
+//     <img src="" alt="alt image text  DONT FORGET to update">
+//     </div>
 
-    <div class="main-text">
-        <p>Test your knowledge of Nintendo games.</p>
-    </div>
-    <div id='start-quiz'>
-    <button type="submit" class="next" >Start</button>
-    </div>
-  `;
-}
+//     <div class="main-text">
+//         <p>Test your knowledge of Nintendo games.</p>
+//     </div>
+//     <div id='start-quiz'>
+//     <button type="submit" class="next" >Start</button>
+//     </div>
+//   `;
+// }
 
 function handleStartQuiz() {
-  $('#start-quiz').on( 'click', function(event) {
+  $('#start-quiz').on('click', function(event) {
     event.preventDefault();
-    $('.testing').addClass('hidden')
-    $('questions-page').removeClasS('hidden')
-    
-    
-    //document.getElementById('testing').innerHTML=generateNextQuestion();
-    console.log('firing');
-
-
+    $('#start-page').toggleClass('hidden');
+    $('#question-page').toggleClass('hidden');
   });
 }
 function currentScore(){}
@@ -130,10 +124,9 @@ function handleResults(){}
 //displays total score and asks to play again
 
 $(function(){
-  handleAnswerSubmitted();
-  document.getElementById('testing').innerHTML=generateStartQuiz();
+  // handleAnswerSubmitted();
   handleStartQuiz();
-  //document.getElementById('testing').innerHTML=generateNextQuestion();
-  userAnswer();
+  document.getElementById('question-page').innerHTML=generateNextQuestion();
+  // userAnswer();
 });
 
