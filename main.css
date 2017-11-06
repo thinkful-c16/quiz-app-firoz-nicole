@@ -3,6 +3,6 @@
     
   }
 
-  .form-holder, .image {
+  .form-holder, .image, .message {
         border: solid black 1px;
   }
