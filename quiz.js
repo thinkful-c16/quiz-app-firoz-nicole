@@ -24,21 +24,28 @@ const QUESTIONS = [
   }
 ];
 
-
 // Create your initial store
 const STORE = {
+  questions: QUESTIONS,
   currentIndex: 0,
+  userAnswerChoice: {}, 
+  //score
+}
 
-  // Current question
-  // User's answer choice(s)
-  // Current view
-  // Score? Anything else?
-};
+function userAnswer(){
+  $('#answer-options').on('submit', function(event){
+    event.preventDefault();
+    STORE.userAnswerChoice.val();
+    console.log('test');
+
+  })
+}
 
 // Template generators
+// displays question for current page 
 function generateNextQuestion() {
   let possibleAnswers = QUESTIONS[STORE.currentIndex].answers.map(function(val, index){
-    return `<div><input type='radio' name='answer' value='${val}' data-index-attr='${index}'/><span class='possible-answers'>${val}</span></div>`;
+    return `<div><input type='radio' name='answer' value='${val}' data-index-attr='${index}' required /><span class='possible-answers'>${val}</span></div>`;
   });
   possibleAnswers = possibleAnswers.join('');
   let content = 
@@ -52,8 +59,36 @@ function generateNextQuestion() {
     </div>`;
   return content;
 }
-// displays question for current page 
 
+function generateStartQuiz(){
+  return `
+    <h1>Nintendo Quiz</h1>
+    <div class="image" >
+    <img src="" alt="alt image text  DONT FORGET to update">
+    </div>
+
+    <div class="main-text">
+        <p>Test your knowledge of Nintendo games.</p>
+    </div>
+    <div id='start-quiz'>
+    <button type="submit" class="next" >Start</button>
+    </div>
+  `;
+}
+
+function handleStartQuiz() {
+  $('#start-quiz').on( 'click', function(event) {
+    event.preventDefault();
+    $('.testing').addClass('hidden')
+    $('questions-page').removeClasS('hidden')
+    
+    
+    //document.getElementById('testing').innerHTML=generateNextQuestion();
+    console.log('firing');
+
+
+  });
+}
 function currentScore(){}
 // show current score
 
@@ -76,7 +111,6 @@ function correctAnswer(){}
 //determine if user input is correct
 
 
-
 // Event handlers
 function handleAnswerSubmitted() {
   $('.user-controls').on('change', '.submit-answer', () => {
@@ -86,12 +120,7 @@ function handleAnswerSubmitted() {
   });
 }
 
-function handleStartQuiz() {
-  $('.user-controls').on('click', '.start-quiz', () => {
-    // Retrieve start quiz identifier of user-clicked start quiz button
-    
-  });
-}
+
 
 function handleAnswer(){}
 //if answer correct, display 'congrats message'
@@ -102,7 +131,9 @@ function handleResults(){}
 
 $(function(){
   handleAnswerSubmitted();
+  document.getElementById('testing').innerHTML=generateStartQuiz();
   handleStartQuiz();
-  document.getElementById('testing').innerHTML=generateNextQuestion();
+  //document.getElementById('testing').innerHTML=generateNextQuestion();
+  userAnswer();
 });
 
