@@ -2,14 +2,28 @@
 
 // In-memory database of questions
 const QUESTIONS = [
-  {
-    question1: 'What is the character\'s name in Metroid?',
-    question2: 'Which Trifoce did Zelda posess?',
-    question3: 'Who do you fight before Mike Tyson in Mike Tyson\'s Punch Out?',
-    question4: 'What year did Dr. Light create Mega Man?',
-    question5: 'What level do you reach after level 99 in Duck Hunt?',
- }
+  {question: 'What is the character\'s name in Metroid?',
+    answers: ['Justin Bailey', 'Samus Aran', 'Langden Olger', 'Mother Brain'],
+    correctAnswer: 'Samus Aran'
+  },
+  {question: 'Which Trifoce did Zelda posess?',
+    answers: ['Wisdom', 'Power', 'Speed', 'Heart'],
+    correctAnswer: 'Wisdom'
+  },
+  {question: 'Who do you fight before Mike Tyson in Mike Tyson\'s Punch Out?',
+    answers: ['Sand Man', 'Soda Popinski', 'King Hippo', 'Super Macho Man'],
+    correctAnswer: 'Super Macho Man'
+  },
+  {question: 'What year did Dr. Light create Mega Man?',
+    answers: ['200Y', '200X', '200Z', '200M'],
+    correctAnswer: '200X'
+  },
+  {question: 'What level do you reach after level 99 in Duck Hunt?',
+    answers: [98, 0, 1, 100],
+    correctAnswer: 0
+  }
 ];
+
 
 // Create your initial store
 const STORE = {
