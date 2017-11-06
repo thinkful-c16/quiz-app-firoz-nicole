@@ -27,6 +27,8 @@ const QUESTIONS = [
 
 // Create your initial store
 const STORE = {
+  currentIndex: 0,
+
   // Current question
   // User's answer choice(s)
   // Current view
@@ -34,11 +36,23 @@ const STORE = {
 };
 
 // Template generators
-function generateQuestions(questions) {}
+function generateNextQuestion() {
+  let possibleAnswers = QUESTIONS[STORE.currentIndex].answers.map(function(val, index){
+    return `<div><input type='radio' name='answer' value='${val}' data-index-attr='${index}'/><span class='possible-answers'>${val}</span></div>`;
+  });
+  possibleAnswers = possibleAnswers.join('');
+  let content = 
+    `<div class="question-container">
+      <h1 class="question-title">${QUESTIONS[STORE.currentIndex].question}</h1>
+      <form id="answer-options">
+          ${possibleAnswers}
+          <div><input type="submit" value="Submit"></div>
+          <div><input type="reset" value="Reset"></div>
+      </form>
+    </div>`;
+  return content;
+}
 // displays question for current page 
-
-function generateAnswerList(answers) {}
-//list of possible answers 
 
 function currentScore(){}
 // show current score
@@ -53,7 +67,8 @@ function generateResults(){}
 
 
 // Rendering functions
-function renderQuestionText(){}
+function renderQuestionText(){
+}
 // render question text from QUESTIONS array
 // render answers  from STORE array
 
@@ -87,5 +102,7 @@ function handleResults(){}
 
 $(function(){
   handleAnswerSubmitted();
-  handleStartQuiz()
+  handleStartQuiz();
+  document.getElementById('testing').innerHTML=generateNextQuestion();
 });
+
