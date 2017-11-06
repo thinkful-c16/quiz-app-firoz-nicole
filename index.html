@@ -11,17 +11,37 @@
 </head>
 <body>
     <div>
-        <h1></h1>
-        <div class="image"></div>
-        <div class="main-text"></div>
+
+        <!-- Start page template             -->
+        <h1>Nintendo Quiz</h1>
+        <div class="image">
+        <img src="" alt="alt image text  DONT FORGET to update">
+        </div>
+
+        <div class="main-text">
+            <p>Test your knowledge of Nintendo games.</p>
+        </div>
+        <div>
+        <button type="submit" class="next">Start</button>
+        </div>
+    
+        
+        
+        <!-- question page template             -->
+        
+        <h1>Question 1</h1>
+        
+        <div class="form-holder">
         <form id="answer-options">
-            <input type="radio"><span class="answers"></span>
-            <input type="radio"><span class="answers"></span>
-            <input type="radio"><span class="answers"></span>
-            <input type="radio"><span class="answers"></span>
-            <input type="submit" value="Submit">
+            <div><input type="radio" name="answer" required /><span class="answers">Q1</span></div>
+            <div><input type="radio" name="answer" required /><span class="answers">Q2</span></div>
+            <div><input type="radio" name="answer" required /><span class="answers">Q3</span></div>
+            <div><input type="radio" name="answer" required /><span class="answers">Q4</span></div>
+            <div><input type="submit" value="Submit"></div>
+            <div><input type="reset" value="Reset"></div>
         </form>
-        <button type="submit" class="next"></button>
+        
+        </div>
     </div>
     <!-- static page
     displays name of quiz
