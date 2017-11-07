@@ -83,6 +83,13 @@ function handleStartQuiz() {
     $('#question-page').toggleClass('hidden');
   });
 }
+
+//function that will loop over properties in the STORE.. 
+//we can check to see if the object index is = to the index of the shown question.
+//increment the current index by 1 
+
+//function check answer
+
 function currentScore(){}
 // show current score
 
@@ -96,6 +103,7 @@ function generateResults(){}
 
 
 // Rendering functions
+
 function renderQuestionText(){
 }
 // render question text from QUESTIONS array
@@ -113,8 +121,6 @@ function handleAnswerSubmitted() {
     // Update STORE and render appropriate section
   });
 }
-
-
 
 function handleAnswer(){}
 //if answer correct, display 'congrats message'
