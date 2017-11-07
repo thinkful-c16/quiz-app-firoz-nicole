@@ -5,7 +5,7 @@ $(document).ready(function(){
   handleStartQuiz();
   handleEvaluateAnswer();
   continueFromResult ();
-  console.log('page load');
+  retakeQuiz();
 });
 
 // In-memory database of questions
@@ -33,7 +33,7 @@ const QUESTIONS = [
 ];
 
 //store state at 1st question
-const STORE = {
+let STORE = {       
   questions: QUESTIONS,
   currentIndex: null,
   ANSWERS: [],
@@ -68,12 +68,10 @@ function render(){
   }
 }
 
-
-
 // Template generators
 // displays question for current page 
 function template() { 
-  //currentScore();
+  
   const possibleAnswers = QUESTIONS[STORE.currentIndex].answers.map(function(val, index){
     return `
       <div><input type='radio' name='answer' value='${val}' data-index-attr='${index}' required />
@@ -123,12 +121,42 @@ function resultTemplate(){
   }
 } 
 
+function finalResultTempalte(){
+  return `
+    <h1>You scored ${STORE.totalCorrect} / ${QUESTIONS.length}</h1>
+    <div class="image">
+      <img src="" alt="alt image text  DONT FORGET to update">
+    </div>
+    <div>
+      <button type="submit" class="next retake-quiz" >Retake Quiz</button>
+    </div>`;
+}
+
+function resetStore(){
+  Object.assign(STORE,({currentIndex:null, ANSWERS:[], totalCorrect: 0} ));
+  
+}
+
+function retakeQuiz (){
+  $('.final-result-page').on('click', '.retake-quiz', function(e){
+    e.preventDefault();
+    console.log('firing');
+    resetStore();
+    render();
+  });
+}
+
 function continueFromResult (){
   $('.question-result-page').on('click', '.continue', function(){
     nextQuestion();
-    generateNextQuestion();
-    render();
-    console.log('continueFromResult firing');
+    ///if at end, call finalresult tempalte
+    if (STORE.currentIndex < 5){
+      generateNextQuestion();
+      render();
+    } else {
+      generateFinalResult();
+      render();
+    }
   });
 }
 
@@ -145,12 +173,15 @@ function handleStartQuiz() {
 function generateNextQuestion(){ 
   $('.question-page').html(template());
 }
+
+function generateFinalResult(){ 
+  $('.final-result-page').html(finalResultTempalte());
+}
  
 function nextQuestion(){
   currentScore();
   STORE.currentIndex++;
 }
-
 
 function handleEvaluateAnswer() {
   $('.question-page').on('submit', '#answer-options', function(event){
@@ -162,14 +193,16 @@ function handleEvaluateAnswer() {
   });
 }
 
+function generateResult(){
+  $('.question-result-page').html(resultTemplate());
+  console.log('result template firing');  
+}
+
 function currentScore(){
   if (STORE.ANSWERS[STORE.ANSWERS.length-1] === QUESTIONS[STORE.currentIndex].correctAnswer) {
     STORE.totalCorrect++;
   }
 }
 
-function generateResult(){
-  $('.question-result-page').html(resultTemplate());
-  console.log('result template firing');  
-}
+
 
