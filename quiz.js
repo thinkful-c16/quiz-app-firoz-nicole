@@ -1,7 +1,8 @@
 'use strict';
 
 $(function(){
-  $('#start-button').on('click', function(){
+  $('#start-button').on('click', function(e){
+    e.preventDefault();
     handleStartQuiz();
   });
 });
@@ -59,13 +60,13 @@ function template() { //changed from generateNextQuestion to template()
         <form id="answer-options">
           ${possibleAnswers}
           <div><input type="submit" value="Next"></div>
-          <div><input type="reset" value="Reset"></div>
+          
           <div>
           <p>Current Score:${totalCorrect}/${QUESTIONS.length}</p>
           <p>Question:${STORE.currentIndex+1}/${QUESTIONS.length}</p> 
       </div>
       </form>
-    </div>`;
+    </div>`;  //<div><input type="reset" value="Reset"></div>
     
   
 }
