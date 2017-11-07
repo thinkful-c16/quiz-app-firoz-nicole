@@ -54,19 +54,25 @@ function render(){
   if (STORE.currentIndex === null){
     $('.start').removeClass('hidden');
     $('.question-page').addClass('hidden');
-    //$('.question-result-page').addClass('hidden');
+    $('.question-result-page').addClass('hidden');
     $('.final-result-page').addClass('hidden');
   //shows question pages
-  } else if (STORE.currentIndex < 5) {
+  } else if (STORE.currentIndex < 5 && (STORE.ANSWERS.length-1) !== STORE.currentIndex) {
     $('.start').addClass('hidden');
     $('.question-page').removeClass('hidden');
-    //$('.question-result-page').addClass('hidden');
+    $('.question-result-page').addClass('hidden');
+    $('.final-result-page').addClass('hidden');
+  }
+  else if (STORE.currentIndex < 5 && (STORE.ANSWERS.length-1) === STORE.currentIndex) {
+    $('.start').addClass('hidden');
+    $('.question-page').addClass('hidden');
+    $('.question-result-page').removeClass('hidden');
     $('.final-result-page').addClass('hidden');
   //shows final result page
   } else {
     $('.start').addClass('hidden');
     $('.question-page').addClass('hidden');
-    //$('.question-result-page').addClass('hidden');
+    $('.question-result-page').addClass('hidden');
     $('.final-result-page').removeClass('hidden');
   }
 }
@@ -111,25 +117,29 @@ function template() {
 }
 
 function resultTemplate(){
-  const right = `
-          <div>
-            <h1>Congratulations!</h1>
-            <div class="message">
-               You got it right!
-             <div>
-             <button type="submit" class="next">Continue</button>
-          </div>
-  `;
-  const wrong = `
-            <div>
-              <h1>Sorry, that's incorrect!</h1>
-              <div class="message">
-              The correct answer was ${QUESTIONS.correctAnswer}
-              <div>
-              <button type="submit" class="next">Continue</button>
-            </div>
-          `;
-}
+  if (STORE.ANSWERS.lastIndexOf.val === QUESTIONS.correctAnswer) {
+    return `
+      <div>
+        <h1>Congratulations!</h1>
+        <div class="message">
+           You got it right!
+         <div>
+         <button type="submit" class="next">Continue</button>
+      </div>
+`;
+  }
+  else {
+    return `
+      <div>
+        <h1>Sorry, that's incorrect!</h1>
+        <div class="message">
+        The correct answer was ${QUESTIONS.correctAnswer}
+        <div>
+        <button type="submit" class="next">Continue</button>
+      </div>
+    `;
+  }
+} 
 
 //runs render at null state index (start page)
 function handleStartQuiz() {
@@ -158,33 +168,22 @@ function handleEvaluateAnswer() {
     STORE.ANSWERS.push($('input[name="answer"]:checked').val());
     checkAnswer();
     generateResult();
-    showResult();
-    
-    console.log(STORE.ANSWERS);     
-    // Perform check: User answer === Correct answer?
-    // Update STORE and render appropriate section
+    render();
   });
 }
-
 
 function checkAnswer(){
   STORE.ANSWERS.forEach(function(el, index){
     if (el === QUESTIONS[index].correctAnswer){
       STORE.totalCorrect++;
       console.log(STORE.totalCorrect);
-
     }
   }); 
 }
 
 function generateResult(){
   $('.question-result-page').html(resultTemplate());
-  console.log('generateResult');  
-}
-
-function showResult() {
-  $('.question-result-page').removeClass('hidden');
-  console.log('showResult');  
+  console.log('result template firing');  
 }
 
 
