@@ -4,6 +4,7 @@ $(document).ready(function(){
   render();
   handleStartQuiz();
   handleEvaluateAnswer();
+  continueFromResult ();
   console.log('page load');
 });
 
@@ -67,20 +68,12 @@ function render(){
   }
 }
 
-//let totalCorrect = 0;
 
-function currentScore(){
-  STORE.ANSWERS.forEach(function(element, index){
-    if (element === QUESTIONS[index].correctAnswer) {
-      STORE.totalCorrect++;
-    } 
-  });
-}
 
 // Template generators
 // displays question for current page 
 function template() { 
-  currentScore();
+  //currentScore();
   const possibleAnswers = QUESTIONS[STORE.currentIndex].answers.map(function(val, index){
     return `
       <div><input type='radio' name='answer' value='${val}' data-index-attr='${index}' required />
@@ -98,8 +91,8 @@ function template() {
           <div><input type="submit" value="Next"></div>
           
           <div>
-          <p>Current Score:${STORE.totalCorrect}/${QUESTIONS.length}</p>
-          <p>Question:${STORE.currentIndex+1}/${QUESTIONS.length}</p> 
+          <p>Current Score:${STORE.totalCorrect} / ${QUESTIONS.length}</p>
+          <p>Question:${STORE.currentIndex+1} / ${QUESTIONS.length}</p> 
       </div>
       </form>
     </div>`; 
@@ -113,7 +106,7 @@ function resultTemplate(){
         <div class="message">
            You got it right!
          <div>
-         <button type="submit" class="next">Continue</button>
+         <button type="submit" class="next continue">Continue</button>
       </div>
   `;
   }
@@ -124,11 +117,20 @@ function resultTemplate(){
         <div class="message">
         The correct answer was ${QUESTIONS[STORE.currentIndex].correctAnswer}
         <div>
-        <button type="submit" class="next">Continue</button>
+        <button type="submit" class="next continue">Continue</button>
       </div>
     `;
   }
 } 
+
+function continueFromResult (){
+  $('.question-result-page').on('click', '.continue', function(){
+    nextQuestion();
+    generateNextQuestion();
+    render();
+    console.log('continueFromResult firing');
+  });
+}
 
 //runs render at null state index (start page)
 function handleStartQuiz() {
@@ -145,26 +147,25 @@ function generateNextQuestion(){
 }
  
 function nextQuestion(){
+  currentScore();
   STORE.currentIndex++;
 }
+
 
 function handleEvaluateAnswer() {
   $('.question-page').on('submit', '#answer-options', function(event){
     event.preventDefault();
     STORE.ANSWERS.push($('input[name="answer"]:checked').val());
-    checkAnswer();
+    //checkAnswer();
     generateResult();
     render();
   });
 }
 
-function checkAnswer(){
-  STORE.ANSWERS.forEach(function(el, index){
-    if (el === QUESTIONS[index].correctAnswer){
-      STORE.totalCorrect++;
-      console.log(STORE.totalCorrect);
-    }
-  }); 
+function currentScore(){
+  if (STORE.ANSWERS[STORE.ANSWERS.length-1] === QUESTIONS[STORE.currentIndex].correctAnswer) {
+    STORE.totalCorrect++;
+  }
 }
 
 function generateResult(){
@@ -172,16 +173,3 @@ function generateResult(){
   console.log('result template firing');  
 }
 
-
-//stored answes in STORE.ANSWERS
-// const QUESTIONS = [
-//   {question: 'What is the character\'s name in Metroid?',
-//     answers: ['Justin Bailey', 'Samus Aran', 'Langden Olger', 'Mother Brain'],
-//     correctAnswer: 'Samus Aran'
-
-// const STORE = {
-//   questions: QUESTIONS,
-//   currentIndex: null,
-//   ANSWERS: [],
-//   totalCorrect: 0
-// };
