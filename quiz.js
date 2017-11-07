@@ -50,20 +50,23 @@ const STORE3 = {
 };
 
 function render(){
+  //shows start page
   if (STORE.currentIndex === null){
     $('.start').removeClass('hidden');
     $('.question-page').addClass('hidden');
-    $('.question-result-page').addClass('hidden');
+    //$('.question-result-page').addClass('hidden');
     $('.final-result-page').addClass('hidden');
+  //shows question pages
   } else if (STORE.currentIndex < 5) {
     $('.start').addClass('hidden');
     $('.question-page').removeClass('hidden');
-    $('.question-result-page').addClass('hidden');
+    //$('.question-result-page').addClass('hidden');
     $('.final-result-page').addClass('hidden');
+  //shows final result page
   } else {
     $('.start').addClass('hidden');
     $('.question-page').addClass('hidden');
-    $('.question-result-page').addClass('hidden');
+    //$('.question-result-page').addClass('hidden');
     $('.final-result-page').removeClass('hidden');
   }
 }
@@ -105,8 +108,27 @@ function template() {
       </div>
       </form>
     </div>`; 
-    
-  
+}
+
+function resultTemplate(){
+  const right = `
+          <div>
+            <h1>Congratulations!</h1>
+            <div class="message">
+               You got it right!
+             <div>
+             <button type="submit" class="next">Continue</button>
+          </div>
+  `;
+  const wrong = `
+            <div>
+              <h1>Sorry, that's incorrect!</h1>
+              <div class="message">
+              The correct answer was ${QUESTIONS.correctAnswer}
+              <div>
+              <button type="submit" class="next">Continue</button>
+            </div>
+          `;
 }
 
 //runs render at null state index (start page)
@@ -135,22 +157,36 @@ function handleEvaluateAnswer() {
     event.preventDefault();
     STORE.ANSWERS.push($('input[name="answer"]:checked').val());
     checkAnswer();
-    //function to display question result page
+    generateResult();
+    showResult();
+    
     console.log(STORE.ANSWERS);     
     // Perform check: User answer === Correct answer?
     // Update STORE and render appropriate section
   });
 }
+
+
 function checkAnswer(){
   STORE.ANSWERS.forEach(function(el, index){
     if (el === QUESTIONS[index].correctAnswer){
       STORE.totalCorrect++;
       console.log(STORE.totalCorrect);
+
+    }
+  }); 
 }
- }); 
-  
-  
+
+function generateResult(){
+  $('.question-result-page').html(resultTemplate());
+  console.log('generateResult');  
 }
+
+function showResult() {
+  $('.question-result-page').removeClass('hidden');
+  console.log('showResult');  
+}
+
 
 //stored answes in STORE.ANSWERS
 // const QUESTIONS = [

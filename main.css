@@ -3,19 +3,11 @@ div {
   
 }
 
-<<<<<<< HEAD
-  .form-holder, .image, .message {
+.form-holder, .image, .message {
         border: solid black 1px;
   }
 
 .hidden{
     display: none;
-=======
-.form-holder, .image, .message {
-  border: solid black 1px;
 }
 
-.hidden {
-display: none;
->>>>>>> master
-}
