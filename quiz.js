@@ -6,6 +6,8 @@ $(function(){
   });
 });
 const ANSWERS = [];
+let totalCorrect = 0;
+
 // In-memory database of questions
 const QUESTIONS = [
   {question: 'What is the character\'s name in Metroid?',
@@ -41,6 +43,7 @@ const STORE = {
 // Template generators
 // displays question for current page 
 function template() { //changed from generateNextQuestion to template()
+  currentScore();
   const possibleAnswers = QUESTIONS[STORE.currentIndex].answers.map(function(val, index){
     return `
       <div><input type='radio' name='answer' value='${val}' data-index-attr='${index}' required />
@@ -50,14 +53,17 @@ function template() { //changed from generateNextQuestion to template()
       </div>
     `;
   }).join('');
-  
   return `
-    <div class="question-container">
-      <h1 class="question-title">${QUESTIONS[STORE.currentIndex].question}</h1>
-      <form id="answer-options">
+      <div class="question-container">
+        <h1 class="question-title">${QUESTIONS[STORE.currentIndex].question}</h1>
+        <form id="answer-options">
           ${possibleAnswers}
           <div><input type="submit" value="Next"></div>
           <div><input type="reset" value="Reset"></div>
+          <div>
+          <p>Current Score:${totalCorrect}/${QUESTIONS.length}</p>
+          <p>Question:${STORE.currentIndex+1}/${QUESTIONS.length}</p>
+      </div>
       </form>
     </div>`;
   
@@ -77,7 +83,6 @@ function generateNextQuestion(){ //changed from userAnswer to generateNextQuesti
   $('#answer-options').on('submit', function(event){
     event.preventDefault();
     STORE.userAnswerChoice = $('input[name="answer"]:checked').val();
-
     const answer = $('input[name="answer"]:checked').val();
 
     ANSWERS.push(answer);
@@ -119,8 +124,14 @@ function handleEvaluateAnswer() {
 
 //function check answer
 
-function currentScore(){}
-// show current score
+function currentScore(){
+  ANSWERS.forEach(function(element, index){
+    if (element === QUESTIONS[index].correctAnswer) {
+      totalCorrect++;
+    } 
+  });
+}
+
 
 function currentQuestion(){}
 //current question button to go to next question
