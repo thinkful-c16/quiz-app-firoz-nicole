@@ -124,21 +124,12 @@ function handleStartQuiz() {
     STORE.currentIndex=STORE.currentIndex++;
     render();
     console.log(STORE);
+    generateNextQuestion();
   });
 }
-  
-
-
-
-// function handleStartQuiz() {
-//   generateNextQuestion();
-//   $('#start-button').addClass('hidden');
-//   $('#question-page').removeClass('hidden');
-//   console.log('handleStartQuiz function');
-// }
 
 function generateNextQuestion(){ 
-  $('#question-page').html(template());
+  $('.question-page').html(template());
   console.log('generateNextQuestion function');
 }
  
