@@ -1,9 +1,10 @@
 'use strict';
 
-$(function(){
+$(document).ready(function(){
   render();
   handleStartQuiz();
   handleEvaluateAnswer();
+  console.log('page load');
 });
 
 
@@ -37,15 +38,6 @@ const STORE = {
   questions: QUESTIONS,
   currentIndex: null,
   ANSWERS: [],
-  totalCorrect: 0
-};
-//const ANSWERS = [];
-
-// store state 2nd question, first question answered
-const STORE2 = {
-  questions: QUESTIONS,
-  currentIndex: 1,
-  userAnswerChoice: ['useranswer1', ],
   totalCorrect: 0
 };
 
@@ -112,18 +104,18 @@ function template() {
           <p>Question:${STORE.currentIndex+1}/${QUESTIONS.length}</p> 
       </div>
       </form>
-    </div>`;  //<div><input type="reset" value="Reset"></div>
+    </div>`; 
     
   
 }
 
 //runs render at null state index (start page)
 function handleStartQuiz() {
-  $('#start-button').on('click', function(e){
+  $(':button').on('click', function(e){
     e.preventDefault();
     STORE.currentIndex=STORE.currentIndex++;
     render();
-    console.log(STORE);
+    console.log('handlestartquiz function');
     generateNextQuestion();
   });
 }
@@ -139,57 +131,36 @@ function nextQuestion(){
 }
 
 function handleEvaluateAnswer() {
-  $('#answer-options').on('submit', function(event){
+  $('.question-page').on('submit', '#answer-options', function(event){
     event.preventDefault();
-    console.log('handleEvaluateAnswer');
-    STORE.userAnswerChoice = $('input[name="answer"]:checked').val();
-    const answer = $('input[name="answer"]:checked').val();
-  
-    STORE.ANSWER.push(answer);
-    nextQuestion();
-    generateNextQuestion();
-    
-    // Retrieve answer identifier of user-checked radio button
+    STORE.ANSWERS.push($('input[name="answer"]:checked').val());
+    checkAnswer();
+    //function to display question result page
+    console.log(STORE.ANSWERS);     
     // Perform check: User answer === Correct answer?
     // Update STORE and render appropriate section
   });
-
-
-  // $('#answer-options').on('submit', function(event){
-
+}
+function checkAnswer(){
+  STORE.ANSWERS.forEach(function(el, index){
+    if (el === QUESTIONS[index].correctAnswer){
+      STORE.totalCorrect++;
+      console.log(STORE.totalCorrect);
+}
+ }); 
+  
+  
 }
 
+//stored answes in STORE.ANSWERS
+// const QUESTIONS = [
+//   {question: 'What is the character\'s name in Metroid?',
+//     answers: ['Justin Bailey', 'Samus Aran', 'Langden Olger', 'Mother Brain'],
+//     correctAnswer: 'Samus Aran'
 
-
-
-
-function currentQuestion(){}
-//current question button to go to next question
-//determine if all questions complete 
-
-function generateResults(){}
-//generating html based on user final score
-
-
-
-// Rendering functions
-
-function renderQuestionText(){
-}
-// render question text from QUESTIONS array
-// render answers  from STORE array
-
-function correctAnswer(){}
-//determine if user input is correct
-
-
-// Event handlers
-
-
-function handleAnswer(){}
-//if answer correct, display 'congrats message'
-//if incorrect, display 'incorrect message' and show correct message
-
-function handleResults(){}
-//displays total score and asks to play again
-
+// const STORE = {
+//   questions: QUESTIONS,
+//   currentIndex: null,
+//   ANSWERS: [],
+//   totalCorrect: 0
+// };
