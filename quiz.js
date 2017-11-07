@@ -117,7 +117,7 @@ function template() {
 }
 
 function resultTemplate(){
-  if (STORE.ANSWERS.lastIndexOf.val === QUESTIONS.correctAnswer) {
+  if (STORE.ANSWERS.lastIndexOf.value === QUESTIONS.correctAnswer) {
     return `
       <div>
         <h1>Congratulations!</h1>
@@ -126,7 +126,7 @@ function resultTemplate(){
          <div>
          <button type="submit" class="next">Continue</button>
       </div>
-`;
+  `;
   }
   else {
     return `
