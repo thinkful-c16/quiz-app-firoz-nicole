@@ -134,7 +134,13 @@ function finalResultTempalte(){
 
 function resetStore(){
   Object.assign(STORE,({currentIndex:null, ANSWERS:[], totalCorrect: 0} ));
-  
+  //spread operator
+  // return {
+  //   ...STORE,
+  //   currentIndex: null,
+  //   ANSWERS: [],
+  //   totalCorrect: 0
+  // }
 }
 
 function retakeQuiz (){
