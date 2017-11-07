@@ -1,12 +1,18 @@
 'use strict';
 
+$(function(){
+  $('#start-button').on('click', function(){
+    handleStartQuiz();
+  });
+});
+const ANSWERS = [];
 // In-memory database of questions
 const QUESTIONS = [
   {question: 'What is the character\'s name in Metroid?',
     answers: ['Justin Bailey', 'Samus Aran', 'Langden Olger', 'Mother Brain'],
     correctAnswer: 'Samus Aran'
   },
-  {question: 'Which Trifoce did Zelda posess?',
+  {question: 'Which Triforce did Zelda posess?',
     answers: ['Wisdom', 'Power', 'Speed', 'Heart'],
     correctAnswer: 'Wisdom'
   },
@@ -30,64 +36,89 @@ const STORE = {
   currentIndex: 0,
   userAnswerChoice: {}, 
   //score
-}
-
-function userAnswer(){
-  $('#answer-options').on('submit', function(event){
-    event.preventDefault();
-    STORE.userAnswerChoice.val();
-    console.log('test');
-
-  })
-}
+};
 
 // Template generators
 // displays question for current page 
-function generateNextQuestion() {
-  let possibleAnswers = QUESTIONS[STORE.currentIndex].answers.map(function(val, index){
-    return `<div><input type='radio' name='answer' value='${val}' data-index-attr='${index}' required /><span class='possible-answers'>${val}</span></div>`;
-  });
-  possibleAnswers = possibleAnswers.join('');
-  let content = 
-    `<div class="question-container">
+function template() { //changed from generateNextQuestion to template()
+  const possibleAnswers = QUESTIONS[STORE.currentIndex].answers.map(function(val, index){
+    return `
+      <div><input type='radio' name='answer' value='${val}' data-index-attr='${index}' required />
+        <span class='possible-answers'>
+         ${val}
+        </span>
+      </div>
+    `;
+  }).join('');
+  
+  return `
+    <div class="question-container">
       <h1 class="question-title">${QUESTIONS[STORE.currentIndex].question}</h1>
       <form id="answer-options">
           ${possibleAnswers}
-          <div><input type="submit" value="Submit"></div>
+          <div><input type="submit" value="Next"></div>
           <div><input type="reset" value="Reset"></div>
       </form>
     </div>`;
-  return content;
-}
-
-function generateStartQuiz(){
-  return `
-    <div class='start-quiz'>
-      <h1>Nintendo Quiz</h1>
-      <div class="image" >
-      <img src="" alt="alt image text  DONT FORGET to update">
-      </div>
-
-      <div class="main-text">
-          <p>Test your knowledge of Nintendo games.</p>
-      </div>
-      <div id='start-quiz'>
-      <button type="submit" class="next" id='start-quiz'>Start</button>
-      </div>
-    </div>
-  `;
+  
 }
 
 function handleStartQuiz() {
-  $('#start-quiz').on( 'click', function(event) {
-    event.preventDefault();
-    $('#start-page').toggleClass('hidden');
-    
-    console.log('firing');
-
-
-  });
+  generateNextQuestion();
+  $('#start-button').toggleClass('hidden');
+  $('#question-page').toggleClass('hidden');
+  
+  // $('#start-quiz').on('click', function(event) {
+  //   event.preventDefault();
 }
+
+function generateNextQuestion(){ //changed from userAnswer to generateNextQuestion
+  $('#question-page').html(template());
+  $('#answer-options').on('submit', function(event){
+    event.preventDefault();
+    STORE.userAnswerChoice = $('input[name="answer"]:checked').val();
+
+    const answer = $('input[name="answer"]:checked').val();
+
+    ANSWERS.push(answer);
+    nextQuestion();
+    
+  });
+  
+  function nextQuestion(){
+    STORE.currentIndex++;
+    generateNextQuestion();
+    
+  }
+
+  // $('#answer-options').on('submit', function(event){
+  //   event.preventDefault();
+  //   STORE.userAnswerChoice = $('input[name="answer"]:checked').val();
+  //   handleAnswerSubmitted();
+  // });
+}
+
+// function handleAnswerSubmitted() {
+//   let userAnswer = STORE.userAnswerChoice;
+//   console.log(userAnswer);
+//   let i = STORE.currentIndex.value;
+//   for (const currentIndex in STORE) { 
+//     if i = i, i++;
+//   }
+//function that will loop over properties in the STORE.. 
+//we can check to see if the object index is = to the index of the shown question.
+//increment the current index by 1 
+//}
+
+
+function handleEvaluateAnswer() {
+  // Retrieve answer identifier of user-checked radio button
+  // Perform check: User answer === Correct answer?
+  // Update STORE and render appropriate section
+}
+
+//function check answer
+
 function currentScore(){}
 // show current score
 
@@ -101,6 +132,7 @@ function generateResults(){}
 
 
 // Rendering functions
+
 function renderQuestionText(){
 }
 // render question text from QUESTIONS array
@@ -111,14 +143,6 @@ function correctAnswer(){}
 
 
 // Event handlers
-function handleAnswerSubmitted() {
-  $('.user-controls').on('change', '.submit-answer', () => {
-    // Retrieve answer identifier of user-checked radio button
-    // Perform check: User answer === Correct answer?
-    // Update STORE and render appropriate section
-  });
-}
-
 
 
 function handleAnswer(){}
@@ -127,12 +151,4 @@ function handleAnswer(){}
 
 function handleResults(){}
 //displays total score and asks to play again
-
-$(function(){
-  handleAnswerSubmitted();
-  //document.getElementById('testing').innerHTML=generateStartQuiz();
-  handleStartQuiz();
-  //document.getElementById('testing').innerHTML=generateNextQuestion();
-  userAnswer();
-});
 
