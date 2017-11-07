@@ -12,20 +12,22 @@
 <body>
     <div>
 <!-- 
-         Start page template             
-        <h1>Nintendo Quiz</h1>
-        <div class="image">
-        <img src="" alt="alt image text  DONT FORGET to update">
-        </div>
+         Start page template              -->
+        <div id="start-page">
+            <h1>Nintendo Quiz</h1>
+            <div class="image">
+                <img src="" alt="alt image text  DONT FORGET to update">
+            </div>
 
-        <div class="main-text">
-            <p>Test your knowledge of Nintendo games.</p>
+            <div class="main-text">
+                <p>Test your knowledge of Nintendo games.</p>
+            </div>
+            <div id="start-quiz">
+                <button type="submit" class="next">Start</button>
+            </div>
         </div>
-        <div>
-        <button type="submit" class="next">Start</button>
-        </div> -->
     
-        
+        <div id="question-page" class="hidden">
         
         <!-- question page template             -->
         
@@ -41,22 +43,19 @@
             <div><input type="reset" value="Reset"></div>
         </form>
          -->
-        <div id='testing'>
-            
-        </div>
-        <div>
-            <p>Current Score: 1/5</p>
-        </div>
-        <div>
-            <p>Current Question: 2</p>
-        </div>
+
+            <div>
+                <p>Current Score: 1/5</p>
+                <p>Current Question: 2</p>
+            </div>
         </div>
 
         <!-- answer response page template             -->
 
-        <h1>Congrats!</h1>
+        <div id="question-result-page" class="hidden">
+            <h1>Congrats!</h1>
 
-        <div class="message">
+            <div class="message">
             You got it right!
             <div>
                 <button type="submit" class="next">Continue</button>
@@ -65,19 +64,24 @@
 
         <!-- results page template             -->
 
-        <h1>You scored 3/5</h1>
+        <div id="final-result-page" class="hidden">
+            <h1>You scored 3/5</h1>
 
-        <div class="image">
-            <img src="" alt="alt image text  DONT FORGET to update">
-        </div>
+            <div class="image">
+                <img src="" alt="alt image text  DONT FORGET to update">
+            </div>
 
-        <div>
-            <button type="submit" class="next">Retake Quiz</button>
+            <div>
+                <button type="submit" class="next">Retake Quiz</button>
+            </div>
         </div>
             
-
     </div>
-  
+    <!-- static page
+    displays name of quiz
+    related images/summary/comments about it
+    button to start quiz
+    -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="quiz.js"></script>
 </body>

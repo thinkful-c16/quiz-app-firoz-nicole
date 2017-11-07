@@ -62,16 +62,18 @@ function generateNextQuestion() {
 
 function generateStartQuiz(){
   return `
-    <h1>Nintendo Quiz</h1>
-    <div class="image" >
-    <img src="" alt="alt image text  DONT FORGET to update">
-    </div>
+    <div class='start-quiz'>
+      <h1>Nintendo Quiz</h1>
+      <div class="image" >
+      <img src="" alt="alt image text  DONT FORGET to update">
+      </div>
 
-    <div class="main-text">
-        <p>Test your knowledge of Nintendo games.</p>
-    </div>
-    <div id='start-quiz'>
-    <button type="submit" class="next" >Start</button>
+      <div class="main-text">
+          <p>Test your knowledge of Nintendo games.</p>
+      </div>
+      <div id='start-quiz'>
+      <button type="submit" class="next" id='start-quiz'>Start</button>
+      </div>
     </div>
   `;
 }
@@ -79,11 +81,8 @@ function generateStartQuiz(){
 function handleStartQuiz() {
   $('#start-quiz').on( 'click', function(event) {
     event.preventDefault();
-    $('.testing').addClass('hidden')
-    $('questions-page').removeClasS('hidden')
+    $('#start-page').toggleClass('hidden');
     
-    
-    //document.getElementById('testing').innerHTML=generateNextQuestion();
     console.log('firing');
 
 
@@ -131,7 +130,7 @@ function handleResults(){}
 
 $(function(){
   handleAnswerSubmitted();
-  document.getElementById('testing').innerHTML=generateStartQuiz();
+  //document.getElementById('testing').innerHTML=generateStartQuiz();
   handleStartQuiz();
   //document.getElementById('testing').innerHTML=generateNextQuestion();
   userAnswer();
