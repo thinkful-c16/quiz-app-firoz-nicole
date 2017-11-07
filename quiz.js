@@ -1,12 +1,20 @@
 'use strict';
 
+$(function(){
+  // handleAnswerSubmitted();
+  handleStartQuiz();
+  document.getElementById('question-page').innerHTML=generateNextQuestion();
+  userAnswer();
+  //handleAnswerSubmitted();
+});
+
 // In-memory database of questions
 const QUESTIONS = [
   {question: 'What is the character\'s name in Metroid?',
     answers: ['Justin Bailey', 'Samus Aran', 'Langden Olger', 'Mother Brain'],
     correctAnswer: 'Samus Aran'
   },
-  {question: 'Which Trifoce did Zelda posess?',
+  {question: 'Which Triforce did Zelda posess?',
     answers: ['Wisdom', 'Power', 'Speed', 'Heart'],
     correctAnswer: 'Wisdom'
   },
@@ -67,17 +75,17 @@ function userAnswer(){
   });
 }
 
-function handleAnswerSubmitted() {
-  let userAnswer = STORE.userAnswerChoice;
-  console.log(userAnswer);
-  let i = STORE.currentIndex.value;
-  for (const currentIndex in STORE) { 
-    if i = i, i++;
-  }
+// function handleAnswerSubmitted() {
+//   let userAnswer = STORE.userAnswerChoice;
+//   console.log(userAnswer);
+//   let i = STORE.currentIndex.value;
+//   for (const currentIndex in STORE) { 
+//     if i = i, i++;
+//   }
 //function that will loop over properties in the STORE.. 
 //we can check to see if the object index is = to the index of the shown question.
 //increment the current index by 1 
-}
+//}
 
 
 function handleEvaluateAnswer() {
@@ -126,6 +134,6 @@ $(function(){
   handleStartQuiz();
   document.getElementById('question-page').innerHTML=generateNextQuestion();
   userAnswer();
-  handleAnswerSubmitted();
+  //handleAnswerSubmitted();
 });
 
