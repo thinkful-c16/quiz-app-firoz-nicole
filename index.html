@@ -11,9 +11,7 @@
 </head>
 <body>
     <div>
-<!-- 
-         Start page template              -->
-        <div id="start-button">
+        <div id="start-button" class="start hidden">
             <h1>Nintendo Quiz</h1>
             <div class="image">
                 <img src="" alt="alt image text  DONT FORGET to update">
@@ -27,32 +25,12 @@
             </div>
         </div>
     
-        <div id="question-page" class="hidden">
-        
-        <!-- question page template             -->
-        
-        <!-- <h1 class="question-title">Question 1</h1>
-        
-        <div class="form-holder">
-        <form id="answer-options">
-            <div><input type="radio" name="answer" required /><span class="answers">Q1</span></div>
-            <div><input type="radio" name="answer" required /><span class="answers">Q2</span></div>
-            <div><input type="radio" name="answer" required /><span class="answers">Q3</span></div>
-            <div><input type="radio" name="answer" required /><span class="answers">Q4</span></div>
-            <div><input type="submit" value="Submit"></div>
-            <div><input type="reset" value="Reset"></div>
-        </form>
-         -->
-
-            <div>
-                <p>Current Score: 1/5</p>
-                <p>Current Question: 2</p>
-            </div>
+        <div class="question-page hidden">
         </div>
 
-        <!-- answer response page template             -->
 
-        <div id="question-result-page" class="hidden">
+
+        <div class="question-result-page hidden">
             <h1>Congrats!</h1>
 
             <div class="message">
@@ -62,9 +40,9 @@
             </div>
         </div>
 
-        <!-- results page template             -->
+        
 
-        <div id="final-result-page" class="hidden">
+        <div class="final-result-page hidden">
             <h1>You scored 3/5</h1>
 
             <div class="image">

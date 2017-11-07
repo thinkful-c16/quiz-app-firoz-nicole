@@ -1,11 +1,11 @@
 'use strict';
 
 $(function(){
-  $('#start-button').on('click', function(e){
-    e.preventDefault();
-    handleStartQuiz();
-  });
+  render();
+  handleStartQuiz();
+  handleEvaluateAnswer();
 });
+
 
 
 // In-memory database of questions
@@ -32,18 +32,64 @@ const QUESTIONS = [
   }
 ];
 
-// Create your initial store
+//store state at 1st question
 const STORE = {
   questions: QUESTIONS,
-  currentIndex: 0,
-  userAnswerChoice: {}, 
+  currentIndex: null,
+  ANSWERS: [],
+  totalCorrect: 0
+};
+//const ANSWERS = [];
+
+// store state 2nd question, first question answered
+const STORE2 = {
+  questions: QUESTIONS,
+  currentIndex: 1,
+  userAnswerChoice: ['useranswer1', ],
+  totalCorrect: 0
 };
 
-const ANSWERS = [];
-let totalCorrect = 0;
+// store state 3rd question, first& second question answered
+const STORE3 = {
+  questions: QUESTIONS,
+  currentIndex: 2,
+  userAnswerChoice: ['useranswer1', 'useranswer2', ],
+  totalCorrect: 0
+};
+
+function render(){
+  if (STORE.currentIndex === null){
+    $('.start').removeClass('hidden');
+    $('.question-page').addClass('hidden');
+    $('.question-result-page').addClass('hidden');
+    $('.final-result-page').addClass('hidden');
+  } else if (STORE.currentIndex < 5) {
+    $('.start').addClass('hidden');
+    $('.question-page').removeClass('hidden');
+    $('.question-result-page').addClass('hidden');
+    $('.final-result-page').addClass('hidden');
+  } else {
+    $('.start').addClass('hidden');
+    $('.question-page').addClass('hidden');
+    $('.question-result-page').addClass('hidden');
+    $('.final-result-page').removeClass('hidden');
+  }
+}
+
+
+//let totalCorrect = 0;
+
+function currentScore(){
+  STORE.ANSWERS.forEach(function(element, index){
+    if (element === QUESTIONS[index].correctAnswer) {
+      STORE.totalCorrect++;
+    } 
+  });
+}
+
 // Template generators
 // displays question for current page 
-function template() { //changed from generateNextQuestion to template()
+function template() { 
   currentScore();
   const possibleAnswers = QUESTIONS[STORE.currentIndex].answers.map(function(val, index){
     return `
@@ -62,7 +108,7 @@ function template() { //changed from generateNextQuestion to template()
           <div><input type="submit" value="Next"></div>
           
           <div>
-          <p>Current Score:${totalCorrect}/${QUESTIONS.length}</p>
+          <p>Current Score:${STORE.totalCorrect}/${QUESTIONS.length}</p>
           <p>Question:${STORE.currentIndex+1}/${QUESTIONS.length}</p> 
       </div>
       </form>
@@ -71,68 +117,59 @@ function template() { //changed from generateNextQuestion to template()
   
 }
 
+//runs render at null state index (start page)
 function handleStartQuiz() {
-  generateNextQuestion();
-  $('#start-button').toggleClass('hidden');
-  $('#question-page').toggleClass('hidden');
-  
-  // $('#start-quiz').on('click', function(event) {
-  //   event.preventDefault();
-}
-
-function generateNextQuestion(){ //changed from userAnswer to generateNextQuestion
-  $('#question-page').html(template());
-  $('#answer-options').on('submit', function(event){
-    event.preventDefault();
-    STORE.userAnswerChoice = $('input[name="answer"]:checked').val();
-    const answer = $('input[name="answer"]:checked').val();
-
-    ANSWERS.push(answer);
-    nextQuestion();
-    
+  $('#start-button').on('click', function(e){
+    e.preventDefault();
+    STORE.currentIndex=STORE.currentIndex++;
+    render();
+    console.log(STORE);
   });
-  
-  function nextQuestion(){
-    STORE.currentIndex++;
-    generateNextQuestion();
-    
-  }
-
-  // $('#answer-options').on('submit', function(event){
-  //   event.preventDefault();
-  //   STORE.userAnswerChoice = $('input[name="answer"]:checked').val();
-  //   handleAnswerSubmitted();
-  // });
 }
+  
 
-// function handleAnswerSubmitted() {
-//   let userAnswer = STORE.userAnswerChoice;
-//   console.log(userAnswer);
-//   let i = STORE.currentIndex.value;
-//   for (const currentIndex in STORE) { 
-//     if i = i, i++;
-//   }
-//function that will loop over properties in the STORE.. 
-//we can check to see if the object index is = to the index of the shown question.
-//increment the current index by 1 
-//}
 
+
+// function handleStartQuiz() {
+//   generateNextQuestion();
+//   $('#start-button').addClass('hidden');
+//   $('#question-page').removeClass('hidden');
+//   console.log('handleStartQuiz function');
+// }
+
+function generateNextQuestion(){ 
+  $('#question-page').html(template());
+  console.log('generateNextQuestion function');
+}
+ 
+function nextQuestion(){
+  STORE.currentIndex++;
+  console.log('nextQuestion function');
+}
 
 function handleEvaluateAnswer() {
-  // Retrieve answer identifier of user-checked radio button
-  // Perform check: User answer === Correct answer?
-  // Update STORE and render appropriate section
-}
-
-//function check answer
-
-function currentScore(){
-  ANSWERS.forEach(function(element, index){
-    if (element === QUESTIONS[index].correctAnswer) {
-      totalCorrect++;
-    } 
+  $('#answer-options').on('submit', function(event){
+    event.preventDefault();
+    console.log('handleEvaluateAnswer');
+    STORE.userAnswerChoice = $('input[name="answer"]:checked').val();
+    const answer = $('input[name="answer"]:checked').val();
+  
+    STORE.ANSWER.push(answer);
+    nextQuestion();
+    generateNextQuestion();
+    
+    // Retrieve answer identifier of user-checked radio button
+    // Perform check: User answer === Correct answer?
+    // Update STORE and render appropriate section
   });
+
+
+  // $('#answer-options').on('submit', function(event){
+
 }
+
+
+
 
 
 function currentQuestion(){}
