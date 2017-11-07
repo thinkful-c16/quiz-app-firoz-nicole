@@ -7,8 +7,6 @@ $(document).ready(function(){
   console.log('page load');
 });
 
-
-
 // In-memory database of questions
 const QUESTIONS = [
   {question: 'What is the character\'s name in Metroid?',
@@ -41,14 +39,6 @@ const STORE = {
   totalCorrect: 0
 };
 
-// store state 3rd question, first& second question answered
-const STORE3 = {
-  questions: QUESTIONS,
-  currentIndex: 2,
-  userAnswerChoice: ['useranswer1', 'useranswer2', ],
-  totalCorrect: 0
-};
-
 function render(){
   //shows start page
   if (STORE.currentIndex === null){
@@ -76,7 +66,6 @@ function render(){
     $('.final-result-page').removeClass('hidden');
   }
 }
-
 
 //let totalCorrect = 0;
 
@@ -117,7 +106,7 @@ function template() {
 }
 
 function resultTemplate(){
-  if (STORE.ANSWERS.lastIndexOf.value === QUESTIONS.correctAnswer) {
+  if (STORE.ANSWERS[STORE.ANSWERS.length-1] === QUESTIONS[STORE.currentIndex].correctAnswer) {
     return `
       <div>
         <h1>Congratulations!</h1>
@@ -133,7 +122,7 @@ function resultTemplate(){
       <div>
         <h1>Sorry, that's incorrect!</h1>
         <div class="message">
-        The correct answer was ${QUESTIONS.correctAnswer}
+        The correct answer was ${QUESTIONS[STORE.currentIndex].correctAnswer}
         <div>
         <button type="submit" class="next">Continue</button>
       </div>
@@ -143,23 +132,20 @@ function resultTemplate(){
 
 //runs render at null state index (start page)
 function handleStartQuiz() {
-  $(':button').on('click', function(e){
-    e.preventDefault();
+  $('#start-button').on('click', function(){
+    //e.preventDefault();
     STORE.currentIndex=STORE.currentIndex++;
     render();
-    console.log('handlestartquiz function');
     generateNextQuestion();
   });
 }
 
 function generateNextQuestion(){ 
   $('.question-page').html(template());
-  console.log('generateNextQuestion function');
 }
  
 function nextQuestion(){
   STORE.currentIndex++;
-  console.log('nextQuestion function');
 }
 
 function handleEvaluateAnswer() {
