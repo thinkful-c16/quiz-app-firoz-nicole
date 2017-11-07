@@ -32,15 +32,6 @@ const STORE = {
   //score
 };
 
-function userAnswer(){
-  $('#answer-options').on('submit', function(event){
-    event.preventDefault();
-    STORE.userAnswerChoice.val();
-    console.log('test');
-
-  });
-}
-
 // Template generators
 // displays question for current page 
 function generateNextQuestion() {
@@ -53,28 +44,12 @@ function generateNextQuestion() {
       <h1 class="question-title">${QUESTIONS[STORE.currentIndex].question}</h1>
       <form id="answer-options">
           ${possibleAnswers}
-          <div><input type="submit" value="Submit"></div>
+          <div><input type="submit" value="Next"></div>
           <div><input type="reset" value="Reset"></div>
       </form>
     </div>`;
   return content;
 }
-
-// function generateStartQuiz(){
-//   return `
-//     <h1>Nintendo Quiz</h1>
-//     <div class="image" >
-//     <img src="" alt="alt image text  DONT FORGET to update">
-//     </div>
-
-//     <div class="main-text">
-//         <p>Test your knowledge of Nintendo games.</p>
-//     </div>
-//     <div id='start-quiz'>
-//     <button type="submit" class="next" >Start</button>
-//     </div>
-//   `;
-// }
 
 function handleStartQuiz() {
   $('#start-quiz').on('click', function(event) {
@@ -84,9 +59,32 @@ function handleStartQuiz() {
   });
 }
 
+function userAnswer(){
+  $('#answer-options').on('submit', function(event){
+    event.preventDefault();
+    STORE.userAnswerChoice = $('input[name="answer"]:checked').val();
+    handleAnswerSubmitted();
+  });
+}
+
+function handleAnswerSubmitted() {
+  let userAnswer = STORE.userAnswerChoice;
+  console.log(userAnswer);
+  let i = STORE.currentIndex.value;
+  for (const currentIndex in STORE) { 
+    if i = i, i++;
+  }
 //function that will loop over properties in the STORE.. 
 //we can check to see if the object index is = to the index of the shown question.
 //increment the current index by 1 
+}
+
+
+function handleEvaluateAnswer() {
+  // Retrieve answer identifier of user-checked radio button
+  // Perform check: User answer === Correct answer?
+  // Update STORE and render appropriate section
+}
 
 //function check answer
 
@@ -114,13 +112,7 @@ function correctAnswer(){}
 
 
 // Event handlers
-function handleAnswerSubmitted() {
-  $('.user-controls').on('change', '.submit-answer', () => {
-    // Retrieve answer identifier of user-checked radio button
-    // Perform check: User answer === Correct answer?
-    // Update STORE and render appropriate section
-  });
-}
+
 
 function handleAnswer(){}
 //if answer correct, display 'congrats message'
@@ -133,6 +125,7 @@ $(function(){
   // handleAnswerSubmitted();
   handleStartQuiz();
   document.getElementById('question-page').innerHTML=generateNextQuestion();
-  // userAnswer();
+  userAnswer();
+  handleAnswerSubmitted();
 });
 
