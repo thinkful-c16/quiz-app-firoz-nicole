@@ -1,12 +1,21 @@
-  div {
-    padding: 10px;
-    
-  }
+div {
+  padding: 10px;
+  
+}
 
+<<<<<<< HEAD
   .form-holder, .image, .message {
         border: solid black 1px;
   }
 
 .hidden{
     display: none;
+=======
+.form-holder, .image, .message {
+  border: solid black 1px;
+}
+
+.hidden {
+display: none;
+>>>>>>> master
 }
