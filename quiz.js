@@ -5,8 +5,7 @@ $(function(){
     handleStartQuiz();
   });
 });
-const ANSWERS = [];
-let totalCorrect = 0;
+
 
 // In-memory database of questions
 const QUESTIONS = [
@@ -37,9 +36,10 @@ const STORE = {
   questions: QUESTIONS,
   currentIndex: 0,
   userAnswerChoice: {}, 
-  //score
 };
 
+const ANSWERS = [];
+let totalCorrect = 0;
 // Template generators
 // displays question for current page 
 function template() { //changed from generateNextQuestion to template()
@@ -62,10 +62,11 @@ function template() { //changed from generateNextQuestion to template()
           <div><input type="reset" value="Reset"></div>
           <div>
           <p>Current Score:${totalCorrect}/${QUESTIONS.length}</p>
-          <p>Question:${STORE.currentIndex+1}/${QUESTIONS.length}</p>
+          <p>Question:${STORE.currentIndex+1}/${QUESTIONS.length}</p> 
       </div>
       </form>
     </div>`;
+    
   
 }
 
